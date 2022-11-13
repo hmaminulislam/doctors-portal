@@ -3,7 +3,7 @@ import React from 'react';
 const Service = ({service}) => {
     const {name, text, img} = service
     return (
-      <div className="card w-96 bg-gray-100 rounded-md shadow-sm">
+      <div className="card bg-gray-100 rounded-md shadow-sm">
         <figure className="px-10 pt-10">
           <img
             src={img}

@@ -3,6 +3,7 @@ import fluoride from '../../../assets/images/fluoride.png'
 import cavity from '../../../assets/images/cavity.png'
 import teeth from '../../../assets/images/whitening.png'
 import Service from './Service';
+import ServiceInfo from './ServiceInfo';
 
 const Services = () => {
     const services = [
@@ -36,6 +37,7 @@ const Services = () => {
                 services.map(service => <Service key={service.id} service={service}></Service>)
             }
         </div>
+        <ServiceInfo></ServiceInfo>
       </div>
     );
 };
