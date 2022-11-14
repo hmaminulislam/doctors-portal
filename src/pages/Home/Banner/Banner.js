@@ -5,7 +5,7 @@ import "./Banner.css";
 
 const Banner = () => {
   return (
-    <div className="hero md:px-5 banner-container">
+    <div className="hero md:px-5 banner-container mt-10">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img src={chair} className="lg:w-1/2 rounded-lg shadow-2xl" alt="" />
         <div>
