@@ -1,7 +1,10 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../contexts/AuthProvider';
 
-const BookingModal = ({ theetment, selectedDate, setTheetment }) => {
+const BookingModal = ({ theetment, selectedDate, setTheetment, refetch }) => {
+  const { user } = useContext(AuthContext);
   const { name, slots } = theetment;
   const date = format(selectedDate, "PP");
   const submitBooking = (event) => {
@@ -10,14 +13,34 @@ const BookingModal = ({ theetment, selectedDate, setTheetment }) => {
     const name = form.name.value;
     const email = form.email.value;
     const phone = form.phone.value;
-    const bookingInfoUser = {
+    const slot = form.slot.value;
+    const booking = {
       appointmentDate: date,
       UserName: name,
       theetment: theetment.name,
       email,
       phone,
+      slot,
     };
-    console.log(bookingInfoUser, setTheetment(null));
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Booking confirm");
+          refetch()
+          setTheetment(null);
+        }
+        else {
+          toast.error(data.message)
+          setTheetment(null);
+        }
+      });
   };
   return (
     <>
@@ -48,26 +71,25 @@ const BookingModal = ({ theetment, selectedDate, setTheetment }) => {
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              defaultValue={user?.displayName}
+              disabled
               className="input input-bordered w-full mb-4"
             />
             <input
               type="tel"
               name="phone"
               placeholder="Phone Number"
+              required
               className="input input-bordered w-full mb-4"
             />
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              defaultValue={user?.email}
+              disabled
               className="input input-bordered w-full mb-4"
             />
-            <button
-              // type="submit"
-              // value="Submit"
-              className="btn btn-accent w-full mb-4"
-            >
+            <button type="submit" className="btn btn-accent w-full mb-4">
               Submit
             </button>
           </form>
