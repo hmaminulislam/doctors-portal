@@ -21,7 +21,7 @@ const InfoCards = () => {
         bgColor: "bg-accent"
       },
       {
-        id: 1,
+        id: 3,
         name: "Contact us now",
         icon: phone,
         text: "+358 18 550 5686",

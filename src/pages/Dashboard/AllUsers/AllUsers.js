@@ -13,17 +13,17 @@ const AllUsers = () => {
 
     const makeAdminHandle = id => {
         fetch(`http://localhost:5000/users/admin/${id}`, {
-            method: 'PUT',
-            headers: {
-                authorization: `bearer ${localStorage.getItem('accessToken')}`
-            }
+          method: "PUT",
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
         })
-        .then(res => res.json())
-        .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             if (data.modifiedCount > 0) {
-                refetch()
+              refetch();
             }
-        })
+          });
     }
     return (
       <div className="mt-5">
