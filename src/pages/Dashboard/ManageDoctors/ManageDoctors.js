@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import ConfirmationModal from "../../shared/ConfirmationModal/ConfirmationModal";
 
 const ManageDoctors = () => {
@@ -7,10 +8,8 @@ const ManageDoctors = () => {
   const closeModal = () => {
     setDeleteDoctor(null)
   }
-  const handleDeleteDoctor = doctor => {
-    console.log(doctor)
-  }
-  const { data: doctors = [] } = useQuery({
+
+  const { data: doctors = [], refetch } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
@@ -26,6 +25,24 @@ const ManageDoctors = () => {
       }
     },
   });
+
+  const handleDeleteDoctor = (doctor) => {
+    console.log(doctor._id);
+    fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          refetch();
+          setDeleteDoctor(null)
+          toast.success(`Doctor ${doctor.name} delete successful`)
+        }
+      });
+  };
   return (
     <div>
       <h2 className="text-3xl font-semibold">

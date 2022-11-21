@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AppointmentOption = ({appointmentOption, setTheetment}) => {
-    const {name, slots} = appointmentOption;
+    const {name, slots, price} = appointmentOption;
     return (
       <div className="card shadow-xl">
         <div className="card-body">
@@ -13,6 +13,7 @@ const AppointmentOption = ({appointmentOption, setTheetment}) => {
             {slots.length}
             {slots.length > 1 ? " SPACES" : " SPACE"} AVAILABLE
           </p>
+          <p className='text-center'>Price: ${price}</p>
           <div className="card-actions justify-center mt-3">
             <label onClick={() => setTheetment(appointmentOption)}
               htmlFor="booking-modal"

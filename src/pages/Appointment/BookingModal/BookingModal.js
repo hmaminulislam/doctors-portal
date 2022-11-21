@@ -5,7 +5,7 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 const BookingModal = ({ theetment, selectedDate, setTheetment, refetch }) => {
   const { user } = useContext(AuthContext);
-  const { name, slots } = theetment;
+  const { name, slots, price } = theetment;
   const date = format(selectedDate, "PP");
   const submitBooking = (event) => {
     event.preventDefault();
@@ -21,6 +21,7 @@ const BookingModal = ({ theetment, selectedDate, setTheetment, refetch }) => {
       email,
       phone,
       slot,
+      price
     };
     fetch("http://localhost:5000/bookings", {
       method: "POST",
